@@ -11,10 +11,16 @@ class GarageController extends AbstractController
     /**
      * @Route("/garage", name="garage")
      */
-    public function index(): Response
+    public function index(GarageRepository $repo): Response
     {
+
+        $garages = $repo->findAll();
         return $this->render('garage/index.html.twig', [
             'controller_name' => 'GarageController',
+            'garages' => $garages
         ]);
     }
+
+
+
 }
