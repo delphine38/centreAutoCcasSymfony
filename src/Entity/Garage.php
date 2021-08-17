@@ -18,41 +18,50 @@ class Garage
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"garage"})
+
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"garage"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"garage"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"garage"})
      */
     private $telephone;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="garages")
+     * @Groups({"garage"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="annonce")
+     * @Groups({"garage"})
      */
     private $garage;
 
     /**
      * @ORM\OneToMany(targetEntity=Garage::class, mappedBy="garage")
+     * @Groups({"garage"})
      */
     private $annonce;
 
     /**
      * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="garage")
+     * @Groups({"garage"})
      */
     private $annonces;
 
