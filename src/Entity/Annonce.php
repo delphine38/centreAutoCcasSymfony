@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AnnonceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AnnonceRepository::class)
@@ -14,56 +15,67 @@ class Annonce
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"classified"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $year;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $kilometer;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $model;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $fuel;
 
     /**
      * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="annonces")
+     * @Groups({"classified"})
      */
     private $garage;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"classified"})
      */
     private $image;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="annonces")
+     * @Groups({"classified"})
      */
     private $user;
 

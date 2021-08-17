@@ -19,7 +19,19 @@ class AnnonceController extends AbstractController
     public function index(annonceRepository $annonceRepository): Response
     {
         $annonces = $annonceRepository->findAll();
-        return $this->json($annonces);
+
+        return $this->json(
+            $annonces,
+            200,
+            [],
+            [
+                // app Entity CarAd "classified" groups
+                "groups" => [
+                    "annonce"
+                ]
+            ]
+        );
+
     }
 
     /**
