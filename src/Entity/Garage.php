@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GarageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,11 +27,6 @@ class Garage
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $user;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $address;
 
     /**
@@ -38,9 +35,30 @@ class Garage
     private $telephone;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="garages")
      */
-    private $ajoutvoiture;
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="annonce")
+     */
+    private $garage;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Garage::class, mappedBy="garage")
+     */
+    private $annonce;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="garage")
+     */
+    private $annonces;
+
+    public function __construct()
+    {
+        $this->annonce = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -55,18 +73,6 @@ class Garage
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getUser(): ?string
-    {
-        return $this->user;
-    }
-
-    public function setUser(string $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }
@@ -95,15 +101,65 @@ class Garage
         return $this;
     }
 
-    public function getAjoutvoiture(): ?string
+    public function getUser(): ?User
     {
-        return $this->ajoutvoiture;
+        return $this->user;
     }
 
-    public function setAjoutvoiture(string $ajoutvoiture): self
+    public function setUser(?User $user): self
     {
-        $this->ajoutvoiture = $ajoutvoiture;
+        $this->user = $user;
 
         return $this;
+    }
+
+    public function getGarage(): ?self
+    {
+        return $this->garage;
+    }
+
+    public function setGarage(?self $garage): self
+    {
+        $this->garage = $garage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getAnnonce(): Collection
+    {
+        return $this->annonce;
+    }
+
+    public function addAnnonce(self $annonce): self
+    {
+        if (!$this->annonce->contains($annonce)) {
+            $this->annonce[] = $annonce;
+            $annonce->setGarage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(self $annonce): self
+    {
+        if ($this->annonce->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getGarage() === $this) {
+                $annonce->setGarage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Annonce[]
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
     }
 }

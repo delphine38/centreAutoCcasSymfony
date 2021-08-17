@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,17 +22,22 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $siret;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lastName;
+    private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstName;
+    private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -38,14 +45,9 @@ class User
     private $email;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $telephone;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberSiret;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -53,13 +55,35 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="string", length=255)
      */
-    private $role = [];
+    private $role;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="user")
+     */
+    private $annonces;
+
+    public function __construct()
+    {
+        $this->annonces = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(string $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
     }
 
     public function getUsername(): ?string
@@ -74,26 +98,26 @@ class User
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->lastName;
+        return $this->firstname;
     }
 
-    public function setLastName(string $lastName): self
+    public function setFirstname(string $firstname): self
     {
-        $this->lastName = $lastName;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function getFirstName(): ?string
+    public function getLastname(): ?string
     {
-        return $this->firstName;
+        return $this->lastname;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setLastname(string $lastname): self
     {
-        $this->firstName = $firstName;
+        $this->lastname = $lastname;
 
         return $this;
     }
@@ -110,26 +134,14 @@ class User
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(int $telephone): self
+    public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getNumberSiret(): ?int
-    {
-        return $this->numberSiret;
-    }
-
-    public function setNumberSiret(int $numberSiret): self
-    {
-        $this->numberSiret = $numberSiret;
 
         return $this;
     }
@@ -146,14 +158,44 @@ class User
         return $this;
     }
 
-    public function getRole(): ?array
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
-    public function setRole(array $role): self
+    public function setRole(string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Annonce[]
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonce $annonce): self
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces[] = $annonce;
+            $annonce->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): self
+    {
+        if ($this->annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getUser() === $this) {
+                $annonce->setUser(null);
+            }
+        }
 
         return $this;
     }
