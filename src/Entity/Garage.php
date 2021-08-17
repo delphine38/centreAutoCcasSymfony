@@ -47,11 +47,6 @@ class Garage
      */
     private $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="annonce")
-     * @Groups({"garage"})
-     */
-    private $garage;
 
     /**
      * @ORM\OneToMany(targetEntity=Garage::class, mappedBy="garage")
