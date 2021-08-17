@@ -25,7 +25,6 @@ class AnnonceController extends AbstractController
             200,
             [],
             [
-                // app Entity CarAd "classified" groups
                 "groups" => [
                     "annonce"
                 ]

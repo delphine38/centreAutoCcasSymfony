@@ -15,67 +15,67 @@ class Annonce
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $year;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $kilometer;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $model;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $fuel;
 
     /**
      * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="annonces")
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $garage;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $image;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="annonces")
-     * @Groups({"classified"})
+     * @Groups({"annonce"})
      */
     private $user;
 
